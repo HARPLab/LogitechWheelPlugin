@@ -7,7 +7,7 @@ public class LogitechWheelPlugin : ModuleRules
 {
 	public LogitechWheelPlugin(ReadOnlyTargetRules Target) : base(Target)
     {
-		
+		PrivatePCHHeaderFile = "Public/LogitechWheelPluginPrivatePCH.h"; // need PCH file in 4.26+
 		PublicIncludePaths.AddRange(
 			new string[] {
                 Path.Combine(ModuleDirectory, "Public"),
@@ -59,10 +59,10 @@ public class LogitechWheelPlugin : ModuleRules
         string LogitechDirectory = Path.Combine(BaseDirectory, "Logitech", "lib", Target.Platform.ToString());
         string[] LibraryNames = { "LogitechSteeringWheelLib" };
 
-        PublicLibraryPaths.Add(LogitechDirectory);
+        // PublicLibraryPaths.Add(LogitechDirectory); // obsolete in 4.26+
         foreach (string LibraryName in LibraryNames)
         {
-            PublicAdditionalLibraries.Add(LibraryName + ".lib");
+            PublicAdditionalLibraries.Add(Path.Combine(LogitechDirectory, LibraryName + ".lib"));
         }
     }
 }
